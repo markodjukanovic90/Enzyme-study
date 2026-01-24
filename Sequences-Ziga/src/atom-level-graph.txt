@@ -1,0 +1,101 @@
+# --- Draw graph ---
+plt.figure(figsize=(10, 10))
+pos = nx.spring_layout(G, seed=42)
+
+nx.draw(
+    G,
+    pos,
+    node_size=300,
+    node_color="lightblue",
+    edge_color="gray",
+    with_labels=False
+)
+
+plt.title("Residue-level Enzyme Graph")
+plt.show()
+
+## draw graphs:
+
+'''for atom in structure.get_atoms():
+    G.add_node(
+        atom.get_serial_number(),
+        element=atom.element,
+        coord=atom.get_coord()
+    )
+    import torch
+
+    edge_index = torch.tensor(list(G.edges)).t().contiguous()
+    x = torch.tensor([...])  # node features
+'''
+
+atoms = [atom for atom in structure.get_atoms()]
+
+# --- Build atom graph ---
+G = nx.Graph()
+
+for i, atom in enumerate(atoms):
+    G.add_node(
+        i,
+        element=atom.element,
+        coord=atom.get_coord()
+    )
+
+# Covalent bond threshold (Å=Angstroms=10^{-10} m); These values are approximate atomic radii + tolerance.
+bond_cutoff = {
+    "H": 1.2,
+    "C": 1.8,
+    "N": 1.7,
+    "O": 1.6,
+    "S": 2.0
+}
+
+def bond_threshold(a, b):
+    return bond_cutoff.get(a.element, 1.8) + bond_cutoff.get(b.element, 1.8)
+
+for i, ai in enumerate(atoms):
+    for j, aj in enumerate(atoms[i+1:], i+1):
+        dist = np.linalg.norm(ai.get_coord() - aj.get_coord())
+        if dist <= bond_threshold(ai, aj):
+            G.add_edge(i, j)
+
+# --- 2D projection ---
+pos = {i: atoms[i].get_coord()[:2] for i in range(len(atoms))}
+
+'''color_map = {
+       "C": "black",
+       "N": "blue",
+       "O": "red",
+       "S": "yellow",
+       "H": "lightgray"
+   }
+
+   node_colors = [
+        color_map.get(G.nodes[i]["element"], "green")
+        for i in G.nodes
+   ]
+   plt.figure(figsize=(12, 12))
+   nx.draw(
+       G,
+       pos,
+       node_size=15,
+       node_color=node_colors,
+       edge_color="gray",
+       with_labels=False
+   )
+   plt.title("Atom Graph (Colored by Element)")
+   plt.axis("equal")
+   plt.show()
+'''
+
+############TODO: feature extraction: degree distributions
+
+#ring structures
+#catalytic atom neighborhoods
+#atom-wise graph embeddings
+
+
+
+
+
+
+

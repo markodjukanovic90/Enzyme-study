@@ -1,0 +1,381 @@
+\documentclass[runningheads]{llncs}
+%
+\usepackage[T1]{fontenc}
+% T1 fonts will be used to generate the final print and online PDFs,
+% so please use T1 fonts in your manuscript whenever possible.
+% Other font encodings may result in incorrect characters.
+%
+% Hyperref package for clickable links
+\usepackage{hyperref}
+%
+\usepackage{graphicx}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following two lines
+% to display URLs in blue roman font according to Springer's eBook style:
+\usepackage{color}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+\urlstyle{rm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{calc,backgrounds}
+%\usepackage{algorithm}
+%\usepackage{algpseudocode}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fixme}
+\fxsetup{draft}
+
+
+\allowdisplaybreaks
+
+\newcommand{\rGB}{\textsc{$r$-GB} }
+\newcommand{\rGBP}{$r$-GBP }
+
+\makeatletter
+\AtBeginDocument{%
+	\renewcommand\doi[1]{}%
+}
+\makeatother
+
+% cSpell:enable
+
+\begin{document}
+
+
+\section{LCS-Type Problems for Sets of Biological Sequences}
+
+In all definitions below, let 
+\[
+\mathcal{S}=\{s_1, s_2, \dots, s_m\}, m \in \mathbb{N}
+\]
+be a set of DNA, RNA, or protein molecules, where each $s_i$ represents a sequence over an alphabet   
+$\Sigma=\{\text{A},\text{C},\text{G},\text{T/U}, ...\}$.
+A sequence $s$ is a \emph{subsequence} of $M_i$ (denoted $s \sqsubseteq s_i$) if the
+characters of $s$ appear in $s_i$ in the same order but not necessarily contiguously. E.g., given is $s_1$=``ACCTAA'', one its subsequence is given by ``ACA''. As follows is a list of optimization problems from bioinformatics that are involved in capturing structural similarities between arbitrary large set of molecular sequences $\mathcal{S}$. 
+ 
+ 
+% -----------------------------------------------------------
+\subsection{Longest Common Subsequence (LCS) Problem}
+
+\textbf{Input:} A set of molecules $\mathcal{S}=\{s_1,\dots,s_m\}$, the basic variant comes with $m=2$. \\[2mm]
+\textbf{Objective:} Find the longest sequence $s$ such that
+\[
+s \sqsubseteq s_i \quad \forall i.
+\]
+
+This represents \textbf{the longest sequence} of nucleotides preserved across all molecules.
+
+
+ 
+This problem generalizes LCS to more than two sequences ($m$) and is commonly used for
+multi-species motif analysis.
+
+% -----------------------------------------------------------
+\subsection{Constrained Longest Common Subsequence (CLCS) Problem}
+
+\textbf{Input:}
+\begin{itemize}
+	\item A set of molecules $\mathcal{S}$.
+	\item A set of required motifs $\mathcal{C}^+=\{p_1,\dots,p_r\}$.
+	\item A set of forbidden motifs $\mathcal{C}^-=\{q_1,\dots,q_s\}$.
+\end{itemize}
+
+\textbf{Objective:} Find the longest common subsequence $s$ such that:
+\begin{itemize}
+	\item  $s \sqsubseteq s_i \quad \forall i$
+    \item  $p_j \sqsubseteq s \quad \forall P_j \in \mathcal{C}^+$
+    \item  $q_\ell \not\sqsubseteq s \quad \forall q_\ell \in \mathcal{C}^-$
+\end{itemize}
+
+This \textbf{captures motif-inclusion or exclusion} constraints often used in biological analysis.
+
+% -----------------------------------------------------------
+\subsection{Restricted Longest Common Subsequence (RLCS)}
+
+\textbf{Input:}
+\begin{itemize}
+	\item A set of sequences $\mathcal{S}$.
+	\item A set of forbidden match pairs 
+	\[
+	\mathcal{R} \subseteq \bigcup_{i<j} 
+	\big(\mathrm{pos}(s_i)\times\mathrm{pos}(s_j)\big),
+	\]
+	meaning certain positional matches are disallowed.
+\end{itemize}
+
+\textbf{Objective:} Find the longest sequence $S$ common to all molecules such that none of the matched
+positions between any pair $(s_i, s_j)$ belongs to $\mathcal{R}$. RLCS models 
+\textbf{biologically constrained situations} where \textbf{certain nucleotides cannot be aligned}.
+
+% -----------------------------------------------------------
+\subsection{Gap-Constrained LCS (GC-LCS)}
+
+\textbf{Input:}
+\begin{itemize}
+	\item Sequences $\mathcal{S}$.
+	\item A gap value $g \in \mathbb{N} $
+	 receiving an integer gap value from the interval $[L, U] \cap \mathbb{N}$;  
+\end{itemize}
+
+\textbf{Objective:} Find a common subsequence $s$ such that if $s_t$ and $s_{t+1}$ match
+positions  $a_i$ and $b_i$ (the nucleotide at these positions fit) in a molecule $s_i$, then the gap between them satisfies
+\[
+L \le (a_i - b_i - 1) \le U, (\forall i=1, \ldots, |s|)
+\]
+
+Gap constraints enforce \textbf{biologically plausible spacing} between matched nucleotides.
+
+% -----------------------------------------------------------
+\subsection{Variable-Gap LCS (VGLCS)}
+This is a generalized variant of the problem  above.  \\
+
+\textbf{Input:}
+\begin{itemize}
+	\item Sequences  $\mathcal{S}$.
+    \item A gap function  $g_i$ for each sequence $s_i \in \mathcal{S}$, is given as the mapping $$g_i \colon \{1, \ldots, |s_i|  \} \mapsto [L,U] \cap \mathbb{N}$$ 
+    receiving an integer gap value from the interval, i.e., $g_i(\cdot) \in [L, U]$  where $L, U \in \mathbb{N}$;  
+\end{itemize}
+
+\textbf{Objective:} Find a common subsequence $s$ that respects \textbf{all gap constraints}. 
+That is, if the nucleotides of $s$ appear on positions $p_1^i < \ldots, < p_{|s|}^i$ in $s_i$
+then  $|p_{j}^i - p_{j-1}^i|\leq g_i(p_{j}^i) + 1$, for each $j=2, \ldots, |s|$, and each $i=1, \ldots, m$. Shortly, for each two consecutive nucleotides of $s$ and their respective positions $(p_1^i, p_2^i)$ in $s_i$, the longest possible distance between them is given by the number $g_i(p_2^i)$. In other words: the distance between two consecutive symbols of the subsequence has to be between bounded above by an upper bound  depend on the position of those symbols in the subsequence. 
+
+ This is suitable for motifs where each structural region has different
+spatial constraints (e.g., \textbf{RNA secondary structure}).
+
+  
+\subsection{Examples Using DNA/RNA Sequences}
+
+Consider the set:
+\[
+\mathcal{S} = \{ 
+s_1 = \mathrm{ACGTA},\;
+s_2 = \mathrm{AGTCTA},\;
+s_3 = \mathrm{ACTAG}
+\}.
+\]
+
+\paragraph{LCS:}
+One longest common subsequence for two molecules is:
+\[
+S = \mathrm{ACTA}.
+\]
+
+\paragraph{CLCS (must include $C^{+}=\{ \mathrm{G}\}$):}
+The result would be s=``AG'' 
+
+\paragraph{RLCS (forbid matching $C$ in $s_1$ with $C$ in $s_2$):}
+A valid restricted LCS is:
+\[
+s = \mathrm{ATA}.
+\]
+
+\paragraph{Gap-Constrained LCS (max gap = 1):}
+A possible GC-LCS is:
+\[
+s = \mathrm{ATA}.
+\]
+
+\paragraph{MLCS:}
+For all three molecules, the result is
+\[
+s = \mathrm{ACTA}.
+\]
+
+\section{SOTA methodology for solving LCS-based problems \& Further Ideas }
+
+\subsection{The basic (or multiple) LCS problem}
+
+This problem is the most basic, and most known in this area of research. It is a constraint-free and solve by dozens of approaches in the literature from approximation algorithms, exact approaches, and several anytime hybrid variants, and pure metaheuristic approaches, tree-based or trajectory-based. 
+ 
+Among all of these, Beam search framework has shown as the most robust approach. Based on the general state-graph framework, whihc depends only by two parameters, the integrated (problem-specific) heuristic to guide the overall search process, there is just one parameter to be tuned --- number of nodes to be further pursued for expansion and generation of nodes for the subsequent level. Beam search is a tree-based meta-heuristic approach that performs in a breadth-first-search manner. It means, it always expands up to a number (parameterized by $\beta$) most promising nodes according to some criteria of evaluation (heuristic evaluations). The most efficient heuristic so-far are: ($i$) the expected-length approximation heuristic; ($ii$) the GMPSUM heuristic that includes two scores as a convex combination ... Furthermore, to make the Beam search approach even more robust, a dynamic version of it has been proposed by dynamically adjusting beam-width ($\beta$) per each level depending on the remaining time estimation and the current beam size.   Concerning the exact solving techniques, an anytime hybrid of A$^*$ and Anytime column search (ACS) has a best performing profile.
+
+
+\subsection{Constrained LCS Problem}
+
+For the constrained version of the LCS problem, Beam search again has shown the best performance.  The generalized  search framework has been first proposed, along with adapted heuristic guidances specifically designed for this kind of problem, utilizing also constraints and their influence in  the final evaluation score. An extension of the expected-length approximation heuristic has proved as the best in terms of the final solution quality. For the fixed-problem with two input strings and one inclusion patters, A$^*$ search methodology has been most efficient. 
+ 
+ \subsection{Variable Gapped LCS Problem}
+ 
+ This interesting variant of the problem has been solved for the fixed version with two input strings by means of three different versions of dynamic programming: the basic one, the sparse variant, and more advanced variant employing complex data structure for speeding up the overall calculation. Apart from that, we are not aware of any approach tackling the version with arbitrary large set $\mathcal{S}$.  We are going to design the approach in our EUROCAST paper that proposes so-called \textit{the Multi Source Beam search approach} that operates on a set of generally weakly connected state-space graph with multiple source nodes. 
+ 
+ %https://link.springer.com/content/pdf/10.1007/s00224-025-10223-0.pdf
+ 
+ 
+ \subsection{Gap-constrained LCS Problem}
+
+
+
+%Wu, Manber (1992), “Fast text searching with errors” – includes constrained subsequence ideas.
+%Hunt–Szymanski style improvements
+
+% primers: a short acid sequences that provide a starting points for DNS synthesis. 
+
+ 
+ The polynomial version with two sequences is solved by dynamic programming in $O(n^3)$ time, where $n$ denotes the length of longer sequence,  too slow for long sequences. It belongs to the sequence  alignment 
+ (SA) as one of the most fundamental components of bioinformatics. This represents a relaxed version of SA. More advanced DP is given by incorporating the Segment Trees Optimization. Graph-Based formulation  is yet another  popular modern interpretation that consists of build a DAG of match pairs, add edges only when the gap constraint is satisfied. Afterwards, solving longest path in DAG, which is linear in edges. The methodology is also used in Protein sequence analysis. Heuristics and Metaheuristics are plan to to used (TODO: planning to do). For very large sequences or for multi-constraint variants: Greedy heuristics and Beam search is worth of a try. More advanced ideas -- LLM-Assisted Heuristics:  Using LLMs to score promising extension paths in the match-pair graph; additionally, ML models to predict pruning thresholds.
+ 
+ 
+ \section{Enzyme study and Optimization/ML: rough ideas }
+ 
+   
+ Suggestions are made w.r.t. provided dataset of Enzymes (.\texttt{PDB} format) and mainly relate do the combination of Optimization techniques and Machine Learning in studying enzymes, their structure, understanding functionality, evolution, etc. A few rough/pre-mature ideas are exposed here. \\
+ 
+ 
+ \textbf{Structural Alignment \& Clustering}: Instead of sequential structures and several optimization problems that identify structurally similar motifs between a bunch of molecular structures, here we deal with more dynamic structures (in essence, graphs). Therefore, one will use structures instead of sequences in comparisons.
+ By keeping this in mind, what could be done is:
+ \begin{itemize}
+     \item RMSD-based clustering
+     \item Fold classification
+     \item Discovery of novel enzyme families 
+ \end{itemize}
+ 
+\textbf{Enzyme mimic}: 
+ \begin{itemize}
+ 	\item This strongly suggests: Designed proteins, enzyme mimics
+ 	
+     \item Possibly AlphaFold / Rosetta outputs
+ 	
+ 	 \item  \underline{Design Validation}: 	Compare designed enzymes vs natural enzymes (Are there any automatic ways of doing so?)
+ 	
+ 	\textbf{Measure indicators:}  Pocket volume, Catalytic residue geometry, \textbf{Stability indicators} (Domination-based optimization problems)
+ \end{itemize}
+ \underline{Research question}:  Do designed enzyme mimics reproduce native catalytic geometry? \\
+ 
+ 
+ \textbf{Machine Learning / AI on 3D Enzyme Data}:  
+ \begin{itemize}
+ 	\item Convert each enzyme into a graph:
+ 	\begin{itemize}
+ 		\item  	\textit{Nodes} -- residues or atoms
+ 		\item  	\textit{Edges} -- spatial proximity
+ 	\end{itemize}   
+ 	
+ 	\item Train models (GNNs (PyTorch Geometric), 3D equivariant networks)  to:
+ 	    \begin{itemize}
+ 	    	\item  Predict enzyme class
+ 	        \item  Predict activity
+ 	         \item Predict stability  -- \underline{a lot of annotated data required}, do we have them?
+ 	   \end{itemize}
+ \end{itemize}
+ 
+ 
+ \textbf{Structure $\rightarrow$ Function Prediction}: 
+ 
+ Train ML models using: 3D features, Pocket descriptors, Electrostatic surfaces (extraction of features?)
+ 
+ \underline{Target labels}: EC number, Substrate class,  Catalytic mechanism, etc. 
+ 
+ \textbf{Evolutionary \& Comparative Studies}: 
+ \begin{itemize}
+ 	\item  \textbf{Structure-Guided Evolution}
+ 	        \begin{itemize}
+ 	        	\item  Map sequence variation onto structure
+ 	        	\item  Detect structurally conserved ``hotspots''
+ 	        \end{itemize}
+ 	        \item Design vs Evolution:  Compare natural enzymes to designed ones, Quantify “distance from natural fold space”
+ \end{itemize}
+ 
+
+ Best Research Direction for myself (based on my profile):  Metaheuristics, Beam search, ML-guided search, ...
+
+  More precisely, the idea could be: \textbf{Guided exploration of enzyme design space using structure-aware heuristics or ML-guided search. } \\
+  
+  \textbf{Another idea:} structural analysis of emzyme based on graph-based instance features (domination problems, stability, diameters, ... Learn stability/function predictors). 
+  
+  \subsection{Conversion into Graphs}
+  
+ \textbf{ A protein/enzyme graph} is typically:
+  
+  \begin{itemize}
+  	\item   Nodes → atoms or residues
+  	\item   Edges → spatial proximity, chemical bonds, or interactions
+  	\item   Node features → residue type, atom type, coordinates, etc.
+  	\item   Edge features → distance, bond type, interaction strength
+  \end{itemize}
+
+  
+ There is \underline{no single graph definition} — the choice depends on your research goal.
+ 
+ \underline{\textbf{Residue-level graph}} (most popular): Best for ML, GNNs, classification, design
+ 
+ \begin{itemize}
+ 	\item  Nodes are amino acid residues
+ 
+    \item Edges are residues within distance threshold (e.g. $\leq  8 Å$)
+ 
+    \item Node features
+    \begin{itemize}
+       \item One-hot AA type
+ 
+        \item Secondary structure
+ 
+        \item Hydrophobicity
+    \end{itemize}
+ \end{itemize}
+ 
+ Edge features:
+ \begin{itemize}
+ 	\item  Euclidean distance,  Contact type
+ \end{itemize}
+ 
+
+  Residue-level graphs are used in AlphaFold-like and GNN models.\\
+  
+  
+  \textbf{Atom-level graph} (high resolution): Best for chemistry, docking, catalysis
+  
+  \begin{itemize}
+  	\item   Node = atom
+  	\item   Edge = covalent bonds + spatial contacts
+  	\item Node features
+  	\begin{itemize}
+  		\item Element, Partial charge, Atom type
+  	\end{itemize}
+  	\item   Edge features
+  	\begin{itemize}
+  		\item   Bond order, Distance
+  	\end{itemize}
+  \end{itemize}
+  
+  Atom graphs are much larger graphs, inquiring for  higher computational cost. \\
+ 
+ \textbf{Pocket / active-site graph}:  Best for enzyme function prediction
+ \begin{itemize}
+ 	\item  Nodes = residues in pocket
+ 	\item  Edges = distances / interactions
+ 	 \item Focused, interpretable
+ \end{itemize}
+ 
+
+With enzyme graphs we can do:
+\begin{itemize}
+	\item Predict enzyme class (EC number) 
+
+    \item Compare natural vs designed enzymes
+
+    \item Detect catalytic motifs
+
+     \item \textbf{Learn stability/function predictors}
+
+     \item Guide enzyme design via ML
+\end{itemize} 
+This aligns perfectly with:
+\begin{itemize}
+	\item search / heuristics
+
+    \item ML-guided exploration
+
+    \item structure-aware optimization
+\end{itemize}
+
+
+ %Chao, Zhang, “Sequence comparison with variable gap constraints” (Bioinformatics, 2006) — foundational.
+%Blin et al. (2010+) – improved versions.
+% https://www.geeksforgeeks.org/dsa/sequence-alignment-problem/
+
+
+
+\end{document}
