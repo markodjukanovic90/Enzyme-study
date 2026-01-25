@@ -1,4 +1,4 @@
-graph_id,num_nodes,num_edges,density,avg_degree,min_degree,max_degree,avg_clustering,avg_degree_centrality,max_degree_centrality,diameter,avg_shortest_path,TODO: combinatorial features 
+graph_id,num_nodes,num_edges,density,avg_degree,min_degree,max_degree,avg_clustering,avg_degree_centrality,max_degree_centrality,diameter,avg_shortest_path,Combinatorial features 
 ranked_0_enzyme_mimicB1-501EN11e,342,1746,0.02994289242167,10.2105263157895,2,19,0.539622440170346,0.02994289242167,0.0557184750733138,10,4.77508531837904,
 ranked_0_enzyme_mimicB1-501EN110e,326,1675,0.0316186880604058,10.2760736196319,4,18,0.537887080840887,0.0316186880604058,0.0553846153846154,10,4.67152430391694,
 ranked_0_enzyme_mimicB1-501EN291e,329,1621,0.030042997998369,9.85410334346505,2,17,0.547695000233888,0.030042997998369,0.0518292682926829,12,4.95129364667507,

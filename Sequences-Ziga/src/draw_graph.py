@@ -3,6 +3,8 @@ import argparse
 import networkx as nx
 import matplotlib.pyplot as plt
 
+INPUT=""
+
 
 def load_graph(json_file):
     with open(json_file, "r") as f:
@@ -54,8 +56,11 @@ def main():
     )
 
     args = parser.parse_args()
-
-    G = load_graph(args.input)
+    
+    if INPUT == "":
+       INPUT = args.input
+       
+    G = load_graph(INPUT)
     draw_graph(G, args.input)
 
 
