@@ -76,37 +76,41 @@ def extract_graph_features(G, title):
 
 
 #TODO: RF-B1-503_top_50_rmsd_pdbs, RF-B1-503_top_50_seq_score_pdbs
-ensyme_type="RF-B1-503/RF-B1-503_top_50_rmsd_pdbs"   #/RF-B1-503_stringent_criteria_enzymes" #B-501 RF-B1-503_top_50_seq_score_pdbs
-pdb_dir = f"EnzymeAI/{ensyme_type}/"
-graph_dir = f"graphs_json/{ensyme_type}/"
+for number in range(10):
+    ensyme_type=f"B1-501-379-0{number}" # zero move: 
+    #ensyme_type="B1-502"
+    pdb_dir = f"../New-enzymes/{ensyme_type}/"
+    graph_dir = f"graphs_json/{ensyme_type}/"
 
-os.makedirs(graph_dir, exist_ok=True)
+    os.makedirs(graph_dir, exist_ok=True)
 
-feature_rows = []
+    feature_rows = []
 
-for fname in os.listdir(pdb_dir):
-    if not fname.endswith(".pdb"):
-        continue
+    for root, _, files in os.walk(pdb_dir):
+        for fname in files:
+            if not fname.endswith(".pdb"):
+                continue
 
-    pdb_path = os.path.join(pdb_dir, fname)
-    graph_id = os.path.splitext(fname)[0]
-  
-    print(f"Processing {graph_id}")
+            pdb_path = os.path.join(root, fname)
 
-    G = pdb_to_residue_graph(pdb_path)
+            # create a unique ID including subdir
+            rel_path = os.path.relpath(pdb_path, pdb_dir)
+            graph_id = os.path.splitext(rel_path)[0].replace(os.sep, "_")
+            if graph_id.split("_")[-1] != "0":
+                continue
 
-    # Save graph
-    json_path = os.path.join(graph_dir, f"{graph_id}.json")
-    save_graph_json(G, json_path)
+            print(f"Processing {graph_id}")
 
-    # Extract features
-    feats = extract_graph_features(G, graph_id)
-    feature_rows.append(feats)
+            G = pdb_to_residue_graph(pdb_path)
 
-df = pd.DataFrame(feature_rows)
-df.to_csv(f"enzyme_graph_features RF-B1-503_top_50_rmsd_pdbs.csv", index=False)
+            # save graph JSON (mirror structure flattened)
+            json_path = os.path.join(graph_dir, f"{graph_id}.json")
+            save_graph_json(G, json_path)
 
-
-
-
+            # extract features
+            feats = extract_graph_features(G, graph_id)
+            feature_rows.append(feats)
+        
+    df = pd.DataFrame(feature_rows)
+    df.to_csv(f"features/enzyme_graph_features {ensyme_type}.csv", index=False)
 
