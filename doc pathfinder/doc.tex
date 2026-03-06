@@ -60,19 +60,55 @@
 	 pLDDT score, PAE matrix (Predicted Aligned Error), model ensemble variance, etc.
 	 allow detecting structural uncertainty regions, which can guide diversification. Diversification will preferentially target structurally uncertain regions identified by AlphaFold confidence metrics. \\
 	 
-	 Another idea is \textit{Structural perturbation strategy}: Introduce direct perturbations of structures before sequence design. This could include pocket reshaping, backbone noise injection, or loop diversification, before re-running \texttt{ProteinMPNN}. This allows exploring new folds close to the catalytic scaffold.
+	 Another idea is \textit{Structural perturbation strategy}: Introduce direct perturbations of structures before sequence design. This could include pocket reshaping, backbone noise injection, or loop diversification, before re-running \texttt{ProteinMPNN}. This allows exploring new folds close to the catalytic scaffold. \\ \vspace{0.2cm}
 	 
 	 
 	
 	
 	
-	
-	
-	\underline{Research question}:  \textcolor{red}{Do designed enzyme mimics reproduce native catalytic geometry? TODO: a paragraph about it should be written...}
-	
-	 
-	 
+\textit{Active Learning With Laboratory Feedback}. 
+Instead of: generate $\rightarrow$ test $\rightarrow$ repeat
 
+Use \textbf{active learning}. Example workflow:
+
+\begin{itemize}
+	\item generate enzyme candidates
+
+    \item cluster them
+
+    \item select maximally diverse representatives
+
+    \item send small batch to lab
+
+    \item update predictive model using results
+\end{itemize}
+
+Then the model learns: which structures are catalytically viable.
+
+This is a closed-loop discovery system.
+	 
+	 
+\textit{Enzyme Morphing}: Generate \textbf{continuous structural trajectories} between:
+
+turboPETase $\rightarrow$ novel folds.This explores intermediate enzyme designs.
+
+Technique:
+\begin{itemize}
+	\item latent diffusion interpolation
+     \item structure morphing
+\end{itemize}
+
+Then evaluate catalytic geometry. This is very novel.\\ 
+
+
+\textbf{One Very Strong Idea (high impact): Use protein language models:}
+
+Examples: ESM-2, ProGen, ProtT5. 
+These provide embedding representations. Use embedding for: clustering, diversity measurement, generative search guidance.
+
+
+Paragraph to be added at the beginning: \textcolor{red}{
+The proposed workflow goes beyond traditional enzyme design pipelines by explicitly exploring the structural manifold of enzymatic proteins. Rather than focusing solely on reproducing known folds, the project aims to discover structurally diverse enzyme mimics that preserve catalytic functionality while introducing novel scaffold architectures. This will be achieved through a combination of generative diffusion models, sequence design networks, structural prediction models, and machine-learning driven clustering methods that enable systematic exploration of protein structure space. }
 
 
 	 \begin{thebibliography}{9}
