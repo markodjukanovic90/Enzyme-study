@@ -1,0 +1,174 @@
+\documentclass[runningheads]{llncs}
+%
+\usepackage[T1]{fontenc}
+% T1 fonts will be used to generate the final print and online PDFs,
+% so please use T1 fonts in your manuscript whenever possible.
+% Other font encodings may result in incorrect characters.
+%
+% Hyperref package for clickable links
+\usepackage{hyperref}
+%
+\usepackage{graphicx}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following two lines
+% to display URLs in blue roman font according to Springer's eBook style:
+\usepackage{color}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+\urlstyle{rm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{calc,backgrounds}
+%\usepackage{algorithm}
+%\usepackage{algpseudocode}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fixme}
+\fxsetup{draft}
+
+
+\allowdisplaybreaks
+
+\newcommand{\rGB}{\textsc{$r$-GB} }
+\newcommand{\rGBP}{$r$-GBP }
+
+\makeatletter
+\AtBeginDocument{%
+	\renewcommand\doi[1]{}%
+}
+\makeatother
+
+% cSpell:enable
+
+\begin{document}
+	
+	  
+ \section{Advanced techniques for improving diversification of the structures }
+	Recall the proposed workflow of the AIZyme project.
+	Step 1 is served for generating structures without sequences by diffusion models. Step 1 is required for predicting a most-likely primary structure (sequences) of the generated (secondary) structures by employing a deep learning model. Further, all these sequences are passed to Step 2, the AlphaFold, for predicting their structures. The buch of obtained structures together with the reference structures is passed to Step 3, the comparison of these two set of structures. Here, we apply filtering by removing bad candidates, and selecting best parameters. For that purpose, vaious metrics are used such as RMSD score ranking.  The obtained/survived sequences are sent to Laboratory testing (AI-zyme), and the procedure is repeated again from over. 
+	
+	The above designed workflow  presents the backbone of our ``de novo'' enzyme generation, relying on several core components such as use of several powerful tools to converge towards a pool of promising (mimic) enzymes (AlphaFold, neural network ProteinMPNN, and diffusion models~ \cite{jumper2020alphafold,dauparas2022robust,yim2024diffusion}) which will further be processed in the laboratory. As this piece of the puzzle is most time-demanding but also most expensive task, one has to ensure, or at least increase the possibility, for selecting those structurally and semantically different structures but still sufficiently realistic ones that would present  one new enzyme with a new functionality subsequently proven in the lab testing. 
+	
+	As already mentioned, the first idea incorporates several filtering mechanisms to diversify the process of   secondary structure-guided novel protein sequence generation.  These filtering mechanisms are based on employing measuring distances in the graph space (secondary structures are 3D spatial graphs) by applying Root Mean Square (RMS) distance, or Root Mean Square Deviation (RMSD), as
+	a metric to quantify the similarity between two graphs by measuring the average difference between their structures.  In that way, it will be given a rough idea on how two graphs really match each other in the space. For each detected pair of similar structures, one of them can be removed uniformly from further consideration. The procedure can be seen as an explicit way of filtering by taking absolute positions of two structures in the search space. However, this usually may not be sufficient and is dependent of the threshold value that indicate if two structures are similar enough so one can be removed. Based on it, we will study the sensibility of AlphaFold w.r.t. the input sequences and their score of similarity and the similarity of output, given by graphs (secondary structure of sequences). This is currently weakly explored in the literature. This may be done by considering different measure of sequential similarity between multiple sequential structures. Among many, the well-established are the longest common subsequence (LCS) problem~\cite{djukanovic2019beam} that seeks for object called sequences for detecting common motifs between pool of sequences. There are many practical variants of the LCS problem such as LCS arc-preserving problem, longest filled subsequence problem, constrained LCS problem, or gapped longest subsequence problem~\cite{lin2002longest,castelli2017longest,chen2011generalized}, whose outcome is more realistic pattern common to all input sequences. In that sense, we could be empirically measure the (structural) similarity of sequences before passing them to AlphaFold. If the relative LCS score is high, meaning the sequences can be well-aligned, it will produce a red flag for increasing  diversification of sequences. Another measure that could serve for this purpose is the famous Multiple Sequence Alignment (MSA) problem ~\cite{katoh2008recent,chatzou2016multiple} and its score reflecting on the size of common patterns embedding. If the need for sequential diversification is detected, it will be passed back to the deep learning model (ProteinMNPP) a request for generating more diversified sequences. 
+	
+	Another step in the proposed workflow which could potentially deal with increasing the diversification of secondary structures before going to the lab is subsequent step when the AlphaFold has generated candidate structures of the sequences, which are then filtered out by RMSD score or another one.  These generated structures could be more deeply analyzed. In essence,   	several {measure indicators} will be incorporated for each of these structures:  pocket volume, Catalytic residue geometry, {stability indicators}---referring to Domination-based optimization problems, graph topology features such as centrality measure, radius of graphs, density, the size of minimum dominating set~\cite{nacher2016minimum,milenkovic2011dominating}, the maximum (quasi-) clique~\cite{bhattacharyya2009mining}, etc. Note that the later two problem are NP-hard combinatorial optimization problems, this, for the real-case graphs, computationally challenging to be examined. However, this is not a substantial issue, as these problems are well studied in the literature where various effective meta-heuristic approaches are designed, able to reach close-to-optimal solutions within reasonable runtimes~\cite{lin2016effective,pullan2011cooperating}. Here one has to deal with controlling these solvers with accordance to the allowed (time and memory) resources.  One idea is to paralelize the process of feature extraction on the HPC (VEGA), speeding up the procedure significantly. Having all these (reasonably cheap) features is expected to be important in identifying group of similar structures, revealing/detecting those bad ones that can be omitted. Let us assume for each structure $s$, extracted is a set of relevant ($d$) features $x_s \in \mathbb R^d $. 
+	 We ted to explore the idea of consensus problem based on employing different clustering techniques in Machine learning, i.e., unsupervised learning frequently used in bioinformatics for, e.g., detecting clusters of proteins with same functionality~\cite{zou2020sequence} in large PPI networks. Further, if $S$ denotes a set of all structures we deal with,one can use clustering techniques such as $k$-means or a hierarchical clustering in order to identify clusters of structures with likely similar feature values; one would here ask for the existence of  a higher number of clusters providing a good clustering (e.g., by reporting Silhouette coefficient). Then, for each cluster $\mathcal{C}$, one could uniformly  sample a portion ($p$) of structures which would be kept for promising candidates, whilst the other structures omitted and new ones regenerated by the diffusion model. They will be passed through the ProteinMPNN and subsequently AlphaFold, until a predefined number of secondary structures is generated, which is likely more diversified than the starting one, further moving to Step 3 of the workflow. \\
+	 
+	 
+	
+	
+	
+	
+	
+	\underline{Research question}:  Do designed enzyme mimics reproduce native catalytic geometry? TODO: a paragraph about it should be written...
+	
+	 
+	
+	
+	 
+	
+	 
+	
+	 
+
+
+
+	 \begin{thebibliography}{9}
+	 	
+	 	\bibitem{jumper2020alphafold}
+	 	J. Jumper, R. Evans, A. Pritzel, T. Green, M. Figurnov, K. Tunyasuvunakool,
+	 	O. Ronneberger, R. Bates, A. {\v{Z}}{\'\i}dek, A. Bridgland, et al.,
+	 	``AlphaFold 2,''
+	 	\textit{Fourteenth Critical Assessment of Techniques for Protein Structure Prediction},
+	 	vol. 13, DeepMind, London, UK, 2020.
+	 	
+	 	\bibitem{dauparas2022robust}
+	 	J. Dauparas, I. Anishchenko, N. Bennett, H. Bai, R. J. Ragotte,
+	 	L. F. Milles, B. I. M. Wicky, A. Courbet, R. J. de Haas,
+	 	N. Bethel, et al.,
+	 	``Robust deep learning--based protein sequence design using ProteinMPNN,''
+	 	\textit{Science}, vol. 378, no. 6615, pp. 49--56, 2022.
+	 	
+	 	\bibitem{yim2024diffusion}
+	 	J. Yim, H. St{\"a}rk, G. Corso, B. Jing, R. Barzilay, and T. S. Jaakkola,
+	 	``Diffusion models in protein structure and docking,''
+	 	\textit{Wiley Interdisciplinary Reviews: Computational Molecular Science},
+	 	vol. 14, no. 2, p. e1711, 2024.
+	 	
+	 	\bibitem{djukanovic2019beam}
+	 	M. Djukanovic, G. R. Raidl, and C. Blum,
+	 	``A beam search for the longest common subsequence problem guided by a novel approximate expected length calculation,''
+	 	in \textit{Proceedings of the International Conference on Machine Learning, Optimization, and Data Science},
+	 	pp. 154--167, Springer, 2019.
+	 	
+	 	\bibitem{lin2002longest}
+	 	G. Lin, Z.-Z. Chen, T. Jiang, and J. Wen,
+	 	``The longest common subsequence problem for sequences with nested arc annotations,''
+	 	\textit{Journal of Computer and System Sciences},
+	 	vol. 65, no. 3, pp. 465--480, 2002.
+	 	
+	 	\bibitem{castelli2017longest}
+	 	M. Castelli, R. Dondi, G. Mauri, and I. Zoppis,
+	 	``The longest filled common subsequence problem,''
+	 	in \textit{Proceedings of the 28th Annual Symposium on Combinatorial Pattern Matching (CPM 2017)},
+	 	Schloss Dagstuhl--Leibniz-Zentrum f{\"u}r Informatik, 2017.
+	 	
+	 	\bibitem{chen2011generalized}
+	 	Y.-C. Chen and K.-M. Chao,
+	 	``On the generalized conschatzou2016multipletrained longest common subsequence problems,''
+	 	\textit{Journal of Combinatorial Optimization},
+	 	vol. 21, no. 3, pp. 383--392, 2011.
+	 	\\
+	 	\bibitem{katoh2008recent}
+	 	K. Katoh and H. Toh,
+	 	``Recent developments in the MAFFT multiple sequence alignment program,''
+	 	\textit{Briefings in Bioinformatics},
+	 	vol. 9, no. 4, pp. 286--298, 2008.
+	 	
+	 	\bibitem{chatzou2016multiple}
+	 	M. Chatzou, C. Magis, J.-M. Chang, C. Kemena, G. Bussotti, I. Erb, and C. Notredame,
+	 	``Multiple sequence alignment modeling: methods and applications,''
+	 	\textit{Briefings in Bioinformatics},
+	 	vol. 17, no. 6, pp. 1009--1023, 2016.
+	 	
+	 	
+	 	\bibitem{nacher2016minimum}
+	 	J. C. Nacher and T. Akutsu,
+	 	``Minimum dominating set-based methods for analyzing biological networks,''
+	 	\textit{Methods},
+	 	vol. 102, pp. 57--63, 2016.
+	 	
+	 	\bibitem{milenkovic2011dominating}
+	 	T. Milenković, V. Memišević, A. Bonato, and N. Pržulj,
+	 	``Dominating biological networks,''
+	 	\textit{PLoS ONE},
+	 	vol. 6, no. 8, p. e23016, 2011.
+	 	
+	 	\bibitem{bhattacharyya2009mining}
+	 	M. Bhattacharyya and S. Bandyopadhyay,
+	 	``Mining the largest quasi-clique in human protein interactome,''
+	 	in \textit{Proceedings of the 2009 International Conference on Adaptive and Intelligent Systems},
+	 	pp. 194--199, IEEE, 2009.
+	 	
+	 	\bibitem{lin2016effective}
+	 	G. Lin, W. Zhu, and M. M. Ali,
+	 	``An effective hybrid memetic algorithm for the minimum weight dominating set problem,''
+	 	\textit{IEEE Transactions on Evolutionary Computation},
+	 	vol. 20, no. 6, pp. 892--907, 2016.
+	 	
+	 	\bibitem{pullan2011cooperating}
+	 	W. Pullan, F. Mascia, and M. Brunato,
+	 	``Cooperating local search for the maximum clique problem,''
+	 	\textit{Journal of Heuristics},
+	 	vol. 17, no. 2, pp. 181--199, 2011.
+	 	
+	 	\bibitem{zou2020sequence}
+	 	Q. Zou, G. Lin, X. Jiang, X. Liu, and X. Zeng,
+	 	``Sequence clustering in bioinformatics: an empirical study,''
+	 	\textit{Briefings in Bioinformatics},
+	 	vol. 21, no. 1, pp. 1--10, 2020.
+	 	
+	 \end{thebibliography}
+ \end{document}
