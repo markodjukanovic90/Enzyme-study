@@ -20,7 +20,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{tikz}
-\usetikzlibrary{calc,backgrounds}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
 %\usepackage{algorithm}
 %\usepackage{algpseudocode}
 \usepackage[ruled,vlined]{algorithm2e}
@@ -101,6 +101,49 @@ One Very Strong, high impact idea -- \textbf{Use protein language models}:
 
 Examples: ESM-2, ProGen, ProtT5~\cite{weissenow2022protein}. 
 These provide embedding representations. Use embedding for: clustering, diversity measurement, generative search guidance. In this way, a better clustering of structures could be generated. 
+
+
+\subsection{Visual representation of the enhanced workflow}
+
+
+\begin{figure}[t]
+	\centering
+	\scalebox{0.7}{
+		\begin{tikzpicture}[
+			node distance=2cm,
+			stage/.style={rectangle, draw=black!70, fill=#1!30, thick, minimum width=4cm, minimum height=1cm, align=center, rounded corners},
+			arrow/.style={-{Stealth[length=3mm, width=2mm]}, thick}
+			]
+			
+			%==================== Nodes ====================%
+			\node[stage=blue] (diffusion) {Diffusion Model \\ Backbone Generation};
+			\node[stage=blue, below=1.5cm of diffusion] (mpnn) {ProteinMPNN \\ Sequence Design};
+			\node[stage=blue, below=1.5cm of mpnn] (alphafold) {AlphaFold \\ Structure Prediction};
+			
+			\node[stage=orange, below=2cm of alphafold] (analysis) {Structural Validation + Graph Features \\ RMSD, Active Site Geometry, Topology, Stability};
+			
+			\node[stage=green, below=2cm of analysis] (clustering) {Diversity-aware Clustering + Representative Selection \\ Structural Families};
+			
+			\node[stage=red, below=2cm of clustering] (lab) {Experimental Validation \\ Enzyme Activity Tests};
+			
+			\node[stage=green, right=5cm of lab] (active) {Active Learning \\ Model Refinement};
+			
+			%==================== Arrows ====================%
+			\draw[arrow] (diffusion) -- (mpnn);
+			\draw[arrow] (mpnn) -- (alphafold);
+			\draw[arrow] (alphafold) -- (analysis);
+			\draw[arrow] (analysis) -- (clustering);
+			\draw[arrow] (clustering) -- (lab);
+			
+			\draw[arrow] (lab.east) -- ++(2,0) -- (active.west);
+			\draw[arrow] (active.south) -- ++(0,-7.5) -- ++(-5.0,0) -- (mpnn.east);
+			
+			% Optional dashed feedback for diversification
+			\draw[arrow, dashed] (clustering.west) -- ++(-3,0) -- ++(0,7) -- (diffusion.west);
+			
+	\end{tikzpicture}}
+	\caption{Simplified AI-driven workflow for diversified de novo enzyme discovery. Core stages include generative backbone modeling, sequence design, structure prediction, structural validation with graph-based features, diversity-aware clustering, and experimental validation. Active learning feedback loops enable iterative improvement of candidate enzymes.}
+\end{figure}
 
 
 
