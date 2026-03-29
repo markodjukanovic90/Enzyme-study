@@ -1,0 +1,116 @@
+\documentclass[runningheads]{llncs}
+%
+\usepackage[T1]{fontenc}
+% T1 fonts will be used to generate the final print and online PDFs,
+% so please use T1 fonts in your manuscript whenever possible.
+% Other font encodings may result in incorrect characters.
+%
+% Hyperref package for clickable links
+\usepackage{hyperref}
+%
+\usepackage{graphicx}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following two lines
+% to display URLs in blue roman font according to Springer's eBook style:
+\usepackage{color}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+\urlstyle{rm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
+%\usepackage{algorithm}
+%\usepackage{algpseudocode}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{fixme}
+\fxsetup{draft}
+
+
+\allowdisplaybreaks
+
+\newcommand{\rGB}{\textsc{$r$-GB} }
+\newcommand{\rGBP}{$r$-GBP }
+
+\makeatletter
+\AtBeginDocument{%
+	\renewcommand\doi[1]{}%
+}
+\makeatother
+
+% cSpell:enable
+
+\begin{document}
+	
+
+ \section{Crucial and Sensitive Questions}
+ 
+ \begin{itemize}
+ 	
+ 	\item \underline{Q0}. \textbf{Scale of generated enzyme mimics (EMs) within the workflow}.  
+ 	The proposed workflow is capable of generating several hundreds of thousands of enzyme mimics (EMs) within a computationally feasible time frame. This scale is already indicative of strong potential for exploring novel regions of the enzyme functional space, as highlighted by Yang et al.~\cite{yang2026}.  
+ 	
+ 	However, it is important to recognize that a substantial proportion of AI-generated enzymes may not exhibit genuinely novel catalytic properties. Due to the design of the generation process—favoring structural proximity to selected reference enzymes—a significant subset of generated EMs is expected to retain functional similarity to the references.  
+ 	
+ 	Consequently, a key challenge lies in balancing \emph{exploration} and \emph{exploitation}: selecting candidates sufficiently close to known functional enzymes to ensure viability, while preserving enough diversity to enable the discovery of novel catalytic behaviors.
+ 	
+ 	\vspace{0.3cm}
+ 	
+ 	\item \underline{Q1}. \textbf{Selection of candidate enzyme mimics for experimental validation}.  
+ 	The selection process can be formalized through a threshold parameter $\theta \in [0,1]$, controlling the trade-off between reliability and diversity. Specifically:
+ 	\begin{itemize}
+ 		\item A proportion $100 \cdot \theta\%$ of EMs with the highest similarity (i.e., smallest distance) to reference enzymes is deterministically selected as high-confidence candidates for laboratory validation.
+ 		\item The remaining $(1 - \theta)\cdot 100\%$ of candidates is sampled probabilistically, with selection likelihood proportional to their distance from the reference enzymes (interpreted here as a fitness or novelty score).
+ 	\end{itemize}
+ 	
+ 	This hybrid deterministic–stochastic strategy enables controlled exploration of the search space while maintaining a core set of reliable candidates. In practice, several thousand EMs are expected to be selected for experimental validation through this mechanism.
+ 	
+ 	\vspace{0.3cm}
+ 	
+ 	\item \underline{Q2}. \textbf{Risk mitigation strategies}.  
+ 	Several potential risks have been identified within the proposed workflow:
+ 	
+ 	\begin{itemize}
+ 		
+ 		\item \underline{Lack of novel catalytic functionality among selected EMs}.  
+ 		It is possible that none of the selected candidates exhibit new or improved catalytic properties. This risk can be mitigated through an \emph{iterative selection and evaluation strategy}, where candidates are submitted for laboratory testing in multiple rounds rather than in a single batch.  
+ 		
+ 		Such an approach enables feedback-driven refinement of the workflow, including:
+ 		\begin{itemize}
+ 			\item adaptive tuning of the selection parameter $\theta$,
+ 			\item modification of the generation or scoring mechanisms,
+ 			\item incorporation of experimental feedback into subsequent selection cycles.
+ 		\end{itemize}
+ 		
+ 		Additionally, employing multiple and functionally diverse reference enzymes during the generation phase can enhance structural and functional diversity, thereby increasing the likelihood of discovering novel catalytic activities.
+ 		
+ 		\item \underline{Experimental and laboratory risks}.  
+ 		Potential laboratory-related risks include challenges in protein expression, folding stability, solubility, and catalytic assay reproducibility. These risks can be mitigated by:
+ 		\begin{itemize}
+ 			\item incorporating in silico filters for stability and expressibility prior to selection,
+ 			\item prioritizing candidates with favorable biophysical properties,
+ 			\item designing robust and redundant experimental validation protocols.
+ 		\end{itemize}
+ 		
+ 	\end{itemize}
+ 	
+ \end{itemize}
+
+
+\newpage
+	 \begin{thebibliography}{9}
+ 
+	     
+	 	 
+	 	\bibitem{yang2026} Jason Yang, Francesca-Zhoufan Li, Yueming Long, Frances H. Arnold,
+	 	Illuminating the universe of enzyme catalysis in the era of artificial intelligence,
+	 	Cell Systems,
+	 	Volume 17, Issue 2,
+	 	2026,
+	 	101372,
+	 	ISSN 2405-4712,
+	 	https://doi.org/10.1016/j.cels.2025.101372.
+	 	
+	 \end{thebibliography}
+ \end{document}
