@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.31)  31 MAY 2026 20:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.31)  31 MAY 2026 20:43
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
-**doc_photo_workflow.tex
-(./doc_photo_workflow.tex
+**doc_workflow_general_filter_clustering.tex
+(./doc_workflow_general_filter_clustering.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21>
 (/usr/share/texlive/texmf-dist/tex/latex/llncs/llncs.cls
@@ -793,8 +793,8 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count344
 \l__pdf_internal_box=\box120
 )
-(./doc_photo_workflow.aux)
-\openout1 = `doc_photo_workflow.aux'.
+(./doc_workflow_general_filter_clustering.aux)
+\openout1 = `doc_workflow_general_filter_clustering.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
@@ -854,9 +854,10 @@ LaTeX Info: Redefining \ref on input line 47.
 LaTeX Info: Redefining \pageref on input line 47.
 LaTeX Info: Redefining \nameref on input line 47.
 
-(./doc_photo_workflow.out) (./doc_photo_workflow.out)
+(./doc_workflow_general_filter_clustering.out)
+(./doc_workflow_general_filter_clustering.out)
 \@outlinefile=\write4
-\openout4 = `doc_photo_workflow.out'.
+\openout4 = `doc_workflow_general_filter_clustering.out'.
 
 LaTeX Font Info:    Trying to load font information for U+msa on input line 50.
 
@@ -967,18 +968,19 @@ FiXme Summary: Number of notes: 0,
 (FiXme)        Total: 0.
 
 [5 <./structure_feature_space.png> <./k_vals.png>] [6 <./cluster_2dPCA.png>]
-(./doc_photo_workflow.aux)
-Package rerunfilecheck Info: File `doc_photo_workflow.out' has not changed.
+(./doc_workflow_general_filter_clustering.aux)
+Package rerunfilecheck Info: File `doc_workflow_general_filter_clustering.out' 
+has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
  23116 strings out of 479648
- 432290 string characters out of 5886115
- 708845 words of memory out of 5000000
+ 432630 string characters out of 5886115
+ 708945 words of memory out of 5000000
  40646 multiletter control sequences out of 15000+600000
  483073 words of font info for 64 fonts, out of 8000000 for 9000
  475 hyphenation exceptions out of 8191
- 100i,8n,104p,500b,935s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 100i,8n,104p,520b,935s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0900.600
 pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.60
 0pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.6
@@ -997,7 +999,8 @@ t/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmsy7.pfb>
-Output written on doc_photo_workflow.pdf (6 pages, 554906 bytes).
+Output written on doc_workflow_general_filter_clustering.pdf (6 pages, 554906 b
+ytes).
 PDF statistics:
  441 PDF objects out of 1000 (max. 8388607)
  112 compressed objects within 2 object streams
