@@ -1,6 +1,9 @@
 \documentclass[runningheads]{llncs}
 %
 \usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, backgrounds, fit, shadows.blur}
+\usetikzlibrary{shadows}
 % T1 fonts will be used to generate the final print and online PDFs,
 % so please use T1 fonts in your manuscript whenever possible.
 % Other font encodings may result in incorrect characters.
@@ -146,7 +149,107 @@ These provide embedding representations. Use embedding for: clustering, diversit
 \end{figure}
 
 
+\newpage
 
+\section{Crucial and sensitive questions}
+
+\begin{itemize}
+	\item \underline{Q0}. \textbf{Number of generated structures in the workflow}. Several hundreds of thousands of EMs are possible for generation within a reasonable amount of time via our workflow. This number with this order of magnitude is already revealed as promising for discovering enzymes with novel catalytic functions in the enzyme space, see J. Yang et al. (2026)~\cite{yang2026}.
+	
+	It is to be noted that many of AI-generated enzymes probably won't posses a new biocatalytic properties but, contrary, according to the generation---which is preferring the search for structures  within a close distance from the selected reference enzymes---many of them will indeed represent functional enyzmes as they mimics the reference. Therefore, it remains crucial to select those enzymes which are reasonably close to the reference enzymes, but to left enough freedom to also select those further-from-reference EMs. \\
+	
+	\item \underline{Q1}. \textbf{Selection of candidate enzyme mimics (EMs) for lab test}. The selection could be addressed by introducing a threshold parameters $\theta \in [0, 1]$. In essence, $100\cdot \theta \%$ of those that are close to the reference are chosen as safe for lab test, while the rest of $(1-\theta)\cdot 100\%$ will be selected  with a probability proportional to their distance from the reference enzymes (the distance here is the fitness score). According to the plan, a several thousands candidate EMs will be selected in overall for the lab testing employing this controlled random process. \\
+	
+	\item Q2.\textbf{ Mitigation risks.}  Several risks are detected within a project:
+	
+	\begin{itemize}
+		\item \underline{None of the selected EMs posses any new catalytic property or functionality}. If this occurs as the lab outcome, it may be mitigated by selecting candidate EMs in several iterations, not immediately provide a maximum number of them for analysis. In that way, we could learn from the lab outcome iteratively, by adapting the algorithmic workflow and/or the value of parameter $\theta$ several times. Another way is to include multiple reference enzymes for generating EMs. In that way, the diversity of the search towards functional enzymes  might be improved yielding an enlarged possibility for discovering new EMs possessing novel catalytic properties.
+		  
+		\item \underline{Lab risks}: TODO
+	\end{itemize}
+\end{itemize}
+
+\subsection{Xzyme workflow}
+  
+ 
+\begin{tikzpicture}[
+	every node/.style={draw, rectangle, rounded corners, minimum width=2.5cm, minimum height=1.2cm, align=center},
+	mainarrow/.style={->, very thick, color=blue!70!black},
+	feedback/.style={->, dashed, very thick, color=gray!70},
+		lab/.style={
+		draw,
+		dashed,
+		rounded corners=6pt,
+		fill=gray!8,
+		font=\small,
+		align=center,
+		inner sep=6pt
+	},
+		wp/.style={
+		draw,
+		rectangle,
+		rounded corners=8pt,
+		minimum width=3.3cm,
+		minimum height=1.4cm,
+		align=center,
+		font=\bfseries,
+		fill=blue!8,
+		draw=blue!50!black,
+		drop shadow
+	},
+	wp_exp/.style={
+		draw,
+		rectangle,
+		rounded corners=8pt,
+		minimum width=3.3cm,
+		minimum height=1.4cm,
+		align=center,
+		font=\bfseries,
+		fill=orange!12,
+		draw=orange!60!black,
+		drop shadow
+	}
+	]
+	
+	% Nodes in circular layout
+	\node[wp] (WP2) at (90:6cm) {WP2\\Automation};
+	\node[wp] (WP3) at (0:6.5cm) {WP3\\Filtering \& Clustering};
+	\node[wp_exp] (WP4) at (-90:7cm) {WP4 \\ Lab testing};
+	\node[wp_exp] (WP5) at (180:6.5cm) {WP5\\Crystallography};
+	
+	% Main arrows
+	\draw[mainarrow] (WP2) -- (WP3);
+	\draw[mainarrow] (WP3) -- (WP4);
+	\draw[mainarrow] (WP4) -- (WP5);
+	\draw[mainarrow] (WP5)  -- (WP2);
+	
+	% Feedback arrows (clean, no labels)
+	\draw[feedback] (WP3) to[bend right=20] (WP2);
+	\draw[feedback] (WP4) to[bend right=20] (WP3);
+	\draw[feedback] (WP4) to[bend right=0] (WP2);
+	\draw[feedback] (WP5) to[bend right=-22] (WP3);
+ 
+	
+	
+	% External annotations (clean placement)
+	\node[lab, align=left] at (-2.4, 0.8) 
+	{Crystallography \\
+		active site conformation\\
+		\& substrate binding};
+	
+	\node[lab, align=left] at (-5.0,-3.8) 
+	{  	E. coli expression\\
+		protein characterization\\
+		activity assay};
+		
+	\node[lab, align=left] at (-5.0, 3.0) 
+    { Christalography data};
+	
+\end{tikzpicture}
+ 
+ 
+
+\newpage
 	 \begin{thebibliography}{9}
 	 	
 	 	\bibitem{jumper2020alphafold}
@@ -252,6 +355,15 @@ These provide embedding representations. Use embedding for: clustering, diversit
 	 	K.~Weissenow, M.~Heinzinger, and B.~Rost,
 	 	``Protein language-model embeddings for fast, accurate, and alignment-free protein structure prediction,''
 	 	\textit{Structure}, vol.~30, no.~8, pp.~1169--1177, 2022.
+	 	
+	 	\bibitem{yang2026} Jason Yang, Francesca-Zhoufan Li, Yueming Long, Frances H. Arnold,
+	 	Illuminating the universe of enzyme catalysis in the era of artificial intelligence,
+	 	Cell Systems,
+	 	Volume 17, Issue 2,
+	 	2026,
+	 	101372,
+	 	ISSN 2405-4712,
+	 	https://doi.org/10.1016/j.cels.2025.101372.
 	 	
 	 \end{thebibliography}
  \end{document}

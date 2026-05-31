@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.31)  11 MAY 2026 08:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.31)  31 MAY 2026 17:30
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
-**pert_chart_figure.tex
-(./pert_chart_figure.tex
+**doc_photo_workflow.tex
+(./doc_photo_workflow.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21>
 (/usr/share/texlive/texmf-dist/tex/latex/llncs/llncs.cls
@@ -793,8 +793,8 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count344
 \l__pdf_internal_box=\box120
 )
-(./pert_chart_figure.aux)
-\openout1 = `pert_chart_figure.aux'.
+(./doc_photo_workflow.aux)
+\openout1 = `doc_photo_workflow.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
@@ -854,9 +854,9 @@ LaTeX Info: Redefining \ref on input line 47.
 LaTeX Info: Redefining \pageref on input line 47.
 LaTeX Info: Redefining \nameref on input line 47.
 
-(./pert_chart_figure.out) (./pert_chart_figure.out)
+(./doc_photo_workflow.out) (./doc_photo_workflow.out)
 \@outlinefile=\write4
-\openout4 = `pert_chart_figure.out'.
+\openout4 = `doc_photo_workflow.out'.
 
 LaTeX Font Info:    Trying to load font information for U+msa on input line 50.
 
@@ -870,8 +870,92 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 50.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (123.91873pt too wide) in paragraph at lines 171--172
+Overfull \hbox (121.41223pt too wide) in paragraph at lines 167--168
 [][]  
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
+75.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
+
+ []
+
+<enzyme_mimicB1-501-379-00EN379a_B1-501-379-00-enzyme_mimicB1-501-379-00EN379a-
+ranked_0.png, id=42, 462.528pt x 346.896pt>
+File: enzyme_mimicB1-501-379-00EN379a_B1-501-379-00-enzyme_mimicB1-501-379-00EN
+379a-ranked_0.png Graphic file (type png)
+<use enzyme_mimicB1-501-379-00EN379a_B1-501-379-00-enzyme_mimicB1-501-379-00EN3
+79a-ranked_0.png>
+Package pdftex.def Info: enzyme_mimicB1-501-379-00EN379a_B1-501-379-00-enzyme_m
+imicB1-501-379-00EN379a-ranked_0.png  used on input line 189.
+(pdftex.def)             Requested size: 199.99826pt x 99.99913pt.
+
+Overfull \hbox (108.06427pt too wide) in paragraph at lines 190--190
+[]\T1/cmr/bx/n/9 Fig.1. []\T1/cmtt/m/n/9 enzyme_mimicB1-501-379-00EN379a_B1-501
+-379-00-enzyme_mimicB1-501-379-00EN379a-ranked_0.png 
+ []
+
+<enzyme_mimicB1-501-379-03EN379i_B1-501-379-03-enzyme_mimicB1-501-379-03EN379i-
+ranked_0.png, id=44, 462.528pt x 346.896pt>
+File: enzyme_mimicB1-501-379-03EN379i_B1-501-379-03-enzyme_mimicB1-501-379-03EN
+379i-ranked_0.png Graphic file (type png)
+<use enzyme_mimicB1-501-379-03EN379i_B1-501-379-03-enzyme_mimicB1-501-379-03EN3
+79i-ranked_0.png>
+Package pdftex.def Info: enzyme_mimicB1-501-379-03EN379i_B1-501-379-03-enzyme_m
+imicB1-501-379-03EN379i-ranked_0.png  used on input line 199.
+(pdftex.def)             Requested size: 199.99826pt x 99.99913pt.
+
+Overfull \hbox (108.06427pt too wide) in paragraph at lines 200--200
+[]\T1/cmr/bx/n/9 Fig.2. []\T1/cmtt/m/n/9 enzyme_mimicB1-501-379-03EN379i_B1-501
+-379-03-enzyme_mimicB1-501-379-03EN379i-ranked_0.png 
+ []
+
+[2 <./enzyme_mimicB1-501-379-00EN379a_B1-501-379-00-enzyme_mimicB1-501-379-00EN
+379a-ranked_0.png>] [3 <./enzyme_mimicB1-501-379-03EN379i_B1-501-379-03-enzyme_
+mimicB1-501-379-03EN379i-ranked_0.png>]
+Overfull \hbox (2.43414pt too wide) in paragraph at lines 312--314
+\T1/cmr/m/n/10 measuring the av-er-age num-ber of graph hops re-quired to con-n
+ect two residues. 
+ []
+
+<structure_feature_space.png, id=71, 1158.3275pt x 420.57124pt>
+File: structure_feature_space.png Graphic file (type png)
+<use structure_feature_space.png>
+Package pdftex.def Info: structure_feature_space.png  used on input line 320.
+(pdftex.def)             Requested size: 349.99306pt x 199.99802pt.
+
+Overfull \hbox (2.86952pt too wide) in paragraph at lines 320--321
+ [][] 
+ []
+
+<k_vals.png, id=72, 586.19pt x 193.72375pt>
+File: k_vals.png Graphic file (type png)
+<use k_vals.png>
+Package pdftex.def Info: k_vals.png  used on input line 329.
+(pdftex.def)             Requested size: 349.99936pt x 100.00089pt.
+
+Overfull \hbox (2.87582pt too wide) in paragraph at lines 329--330
+ [][] 
+ []
+
+<cluster_2dPCA.png, id=73, 1154.3125pt x 816.04875pt>
+File: cluster_2dPCA.png Graphic file (type png)
+<use cluster_2dPCA.png>
+Package pdftex.def Info: cluster_2dPCA.png  used on input line 336.
+(pdftex.def)             Requested size: 349.99522pt x 200.00218pt.
+
+Overfull \hbox (2.87169pt too wide) in paragraph at lines 336--337
+ [][] 
  []
 
 
@@ -881,28 +965,41 @@ FiXme Summary: Number of notes: 0,
 (FiXme)        Number of fatal errors: 0,
 (FiXme)        Total: 0.
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-
-] (./pert_chart_figure.aux)
-Package rerunfilecheck Info: File `pert_chart_figure.out' has not changed.
+[4] [5 <./structure_feature_space.png> <./k_vals.png>] [6 <./cluster_2dPCA.png>
+] (./doc_photo_workflow.aux)
+Package rerunfilecheck Info: File `doc_photo_workflow.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 23043 strings out of 479648
- 430066 string characters out of 5886115
- 709430 words of memory out of 5000000
- 40613 multiletter control sequences out of 15000+600000
- 474813 words of font info for 41 fonts, out of 8000000 for 9000
+ 23116 strings out of 479648
+ 432290 string characters out of 5886115
+ 708845 words of memory out of 5000000
+ 40646 multiletter control sequences out of 15000+600000
+ 483073 words of font info for 64 fonts, out of 8000000 for 9000
  475 hyphenation exceptions out of 8191
- 100i,8n,104p,477b,949s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600
-pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.60
-0pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.6
-00pk>
-Output written on pert_chart_figure.pdf (1 page, 24239 bytes).
+ 100i,8n,104p,500b,935s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0900.600
+pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.60
+0pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.6
+00pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.
+600pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000
+.600pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx090
+0.600pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx12
+00.600pk> </home/marko/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0
+900.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb>
+Output written on doc_photo_workflow.pdf (6 pages, 553998 bytes).
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
- 3 named destinations out of 1000 (max. 500000)
- 109 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 440 PDF objects out of 1000 (max. 8388607)
+ 112 compressed objects within 2 object streams
+ 16 named destinations out of 1000 (max. 500000)
+ 134 words of extra memory for PDF output out of 10000 (max. 10000000)
 

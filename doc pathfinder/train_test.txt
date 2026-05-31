@@ -1,0 +1,40 @@
+train_files=(
+ train/mglcs_10_100_2_0.txt
+ train/mglcs_10_100_4_0.txt
+ train/mglcs_10_200_2_0.txt
+ train/mglcs_10_200_4_0.txt
+ train/mglcs_10_500_2_0.txt
+ train/mglcs_10_500_4_0.txt
+ train/mglcs_10_50_2_0.txt
+ train/mglcs_10_50_4_0.txt
+ train/mglcs_3_100_2_0.txt
+ train/mglcs_3_100_4_0.txt
+ train/mglcs_3_200_2_0.txt
+ train/mglcs_3_200_4_0.txt
+ train/mglcs_3_500_2_0.txt
+ train/mglcs_3_500_4_0.txt
+ train/mglcs_3_50_2_0.txt
+ train/mglcs_3_50_4_0.txt
+)
+
+############################
+# ALL VALIDATION FILES
+############################
+
+val_files=(
+ validate/mglcs_10_200_2_1.txt
+ validate/mglcs_10_200_4_1.txt
+ validate/mglcs_10_500_2_1.txt
+ validate/mglcs_10_500_4_1.txt
+ validate/mglcs_3_200_2_1.txt
+ validate/mglcs_3_200_4_1.txt
+ validate/mglcs_3_500_2_1.txt
+ validate/mglcs_3_500_4_1.txt
+ validate/mglcs_2_200_2_1.txt
+ validate/mglcs_2_200_4_1.txt
+ validate/mglcs_2_500_2_1.txt
+ validate/mglcs_2_500_4_1.txt
+ validate/mglcs_5_200_2_1.txt
+ validate/mglcs_5_200_4_1.txt
+ validate/mglcs_5_500_2_1.txt
+ validate/mglcs_5_500_4_1.txt
