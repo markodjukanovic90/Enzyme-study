@@ -74,7 +74,7 @@ def extract_graph_features(G, title):
     
     return features
 
-
+'''
 #TODO: RF-B1-503_top_50_rmsd_pdbs, RF-B1-503_top_50_seq_score_pdbs
 for number in range(10):
     ensyme_type=f"B1-501-379-0{number}" # zero move: 
@@ -113,4 +113,51 @@ for number in range(10):
         
     df = pd.DataFrame(feature_rows)
     df.to_csv(f"features/enzyme_graph_features {ensyme_type}.csv", index=False)
+'''
+
+
+#TODO: RF-B1-503_top_50_rmsd_pdbs, RF-B1-503_top_50_seq_score_pdbs
+
+ensyme_type = "B-501_top_50_rmsd_pdbs" # zero move: 
+#ensyme_type="B1-502"
+pdb_dir = f"{ensyme_type}/"
+graph_dir = f"graphs_json/{ensyme_type}/"
+
+os.makedirs(graph_dir, exist_ok=True)
+
+feature_rows = []
+
+for root, _, files in os.walk(pdb_dir):
+    
+    for fname in files:
+        if not fname.endswith(".pdb"):
+            continue
+        
+        pdb_path = os.path.join(root, fname)
+
+        # create a unique ID including subdir
+        rel_path = os.path.relpath(pdb_path, pdb_dir)
+        graph_id = os.path.splitext(rel_path)[0].replace(os.sep, "_")
+       
+        #print(graph_id)
+        #if graph_id.split("_")[-1] != "0":
+        #    continue
+
+        print(f"Processing {graph_id}")
+
+        G = pdb_to_residue_graph(pdb_path)
+
+        # save graph JSON (mirror structure flattened)
+        json_path = os.path.join(graph_dir, f"{graph_id}.json")
+        save_graph_json(G, json_path)
+
+        # extract features
+        feats = extract_graph_features(G, graph_id)
+        feature_rows.append(feats)
+        
+df = pd.DataFrame(feature_rows)
+df.to_csv(f"features/enzyme_graph_features {ensyme_type}.csv", index=False)
+
+
+
 
